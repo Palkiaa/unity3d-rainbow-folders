@@ -16,9 +16,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+
 using Borodar.RainbowFolders.Editor.Settings;
+
 using UnityEditor;
 using UnityEditor.VersionControl;
+
 using UnityEngine;
 
 #if UNITY_2020_1_OR_NEWER
@@ -74,10 +77,17 @@ namespace Borodar.RainbowFolders.Editor
 
             var setting = RainbowFoldersSettings.Instance;
             if (setting == null) return;
-            var texture = RainbowFoldersSettings.Instance.GetFolderIcon(path, isSmall);
-            if (texture == null) return;
+            var folder = RainbowFoldersSettings.Instance.GetFolderByPath(path, true);
+            if (folder == null) return;
 
-            DrawCustomIcon(guid, rect, texture, isSmall);
+            if (isSmall)
+            {
+                DrawCustomIcon(guid, rect, folder.SmallIcon, isSmall, folder.Color);
+            }
+            else
+            {
+                DrawCustomIcon(guid, rect, folder.LargeIcon, isSmall, folder.Color);
+            }
         }
 
         private static void DrawEditIcon(string guid, Rect rect)
@@ -135,7 +145,7 @@ namespace Borodar.RainbowFolders.Editor
 
                 var vcsHookType = assembly.GetType("UnityEditorInternal.VersionControl.ProjectHooks");
                 var vcsHook = vcsHookType.GetMethod("OnProjectWindowItem", BindingFlags.Static | BindingFlags.Public);
-                _drawVcsOverlay = (ProjectWindowItemCallback) Delegate.CreateDelegate(typeof(ProjectWindowItemCallback), vcsHook);
+                _drawVcsOverlay = (ProjectWindowItemCallback)Delegate.CreateDelegate(typeof(ProjectWindowItemCallback), vcsHook);
             }
             catch (SystemException ex)
             {
@@ -155,11 +165,11 @@ namespace Borodar.RainbowFolders.Editor
                 var collabAccessType = assembly.GetType("UnityEditor.Web.CollabAccess");
                 var collabAccessInstance = collabAccessType.GetProperty("Instance", BindingFlags.Static | BindingFlags.Public).GetValue(null, null);
                 var collabAccessMethod = collabAccessInstance.GetType().GetMethod("IsServiceEnabled", BindingFlags.Instance | BindingFlags.Public);
-                _isCollabEnabled = (Func<bool>) Delegate.CreateDelegate(typeof(Func<bool>), collabAccessInstance, collabAccessMethod);
+                _isCollabEnabled = (Func<bool>)Delegate.CreateDelegate(typeof(Func<bool>), collabAccessInstance, collabAccessMethod);
 
                 var collabHookType = assembly.GetType("UnityEditor.Collaboration.CollabProjectHook");
                 var collabHook = collabHookType.GetMethod("OnProjectWindowItemIconOverlay", BindingFlags.Static | BindingFlags.Public);
-                _drawCollabOverlay = (ProjectWindowItemCallback) Delegate.CreateDelegate(typeof(ProjectWindowItemCallback), collabHook);
+                _drawCollabOverlay = (ProjectWindowItemCallback)Delegate.CreateDelegate(typeof(ProjectWindowItemCallback), collabHook);
             }
             catch (SystemException ex)
             {
@@ -189,11 +199,11 @@ namespace Borodar.RainbowFolders.Editor
             }
             else
             {
-                window.ShowWithParams(position, new List<string> {path}, 0);
+                window.ShowWithParams(position, new List<string> { path }, 0);
             }
         }
 
-        private static void DrawCustomIcon(string guid, Rect rect, Texture texture, bool isSmall)
+        private static void DrawCustomIcon(string guid, Rect rect, Texture texture, bool isSmall, Color? color = null)
         {
             if (rect.width > LARGE_ICON_SIZE)
             {
@@ -207,8 +217,8 @@ namespace Borodar.RainbowFolders.Editor
 #if UNITY_5_5
                     if (isSmall) rect = new Rect(rect.x + 3, rect.y, rect.width, rect.height);
 #elif UNITY_5_6_OR_NEWER
-                    if (isSmall && !IsTreeView(rect))
-                        rect = new Rect(rect.x + 3, rect.y, rect.width, rect.height);
+                if (isSmall && !IsTreeView(rect))
+                    rect = new Rect(rect.x + 3, rect.y, rect.width, rect.height);
 #endif
             }
 
@@ -236,7 +246,14 @@ namespace Borodar.RainbowFolders.Editor
             }
             else
             {
-                GUI.DrawTexture(rect, texture);
+                if (color != null)
+                {
+                    GUI.DrawTexture(rect, texture, ScaleMode.ScaleToFit, true, 0, color.Value, 0f, 0f);
+                }
+                else
+                {
+                    GUI.DrawTexture(rect, texture);
+                }
             }
         }
 
@@ -259,7 +276,7 @@ namespace Borodar.RainbowFolders.Editor
 
         private static bool IsSelected(string guid)
         {
-            return Selection.assetGUIDs.Contains(guid);
+            return Selection.assetGUIDs.Any() && Selection.assetGUIDs[0] == guid;
         }
     }
 }

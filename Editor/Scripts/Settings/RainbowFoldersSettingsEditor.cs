@@ -15,6 +15,8 @@
 using Borodar.ReorderableList;
 using UnityEditor;
 
+using UnityEngine;
+
 namespace Borodar.RainbowFolders.Editor.Settings
 {
     [CustomEditor(typeof (RainbowFoldersSettings))]
@@ -32,6 +34,14 @@ namespace Borodar.RainbowFolders.Editor.Settings
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+            RainbowFoldersSettings settings = target as RainbowFoldersSettings;
+            if (GUILayout.Button("Reset all color modifiers"))
+            {
+                foreach (var item in settings.Folders)
+                {
+                    item.Color = Color.white;
+                }
+            }
             ReorderableListGUI.Title("Rainbow Folders");
             ReorderableListGUI.ListField(_foldersProperty);
             serializedObject.ApplyModifiedProperties();

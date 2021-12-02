@@ -33,7 +33,7 @@ namespace Borodar.RainbowFolders.Editor
         private const float BUTTON_WIDTH_SMALL = 16f;
 
         private const float WINDOW_WIDTH = 325f;
-        private const float WINDOW_HEIGHT = 110f;
+        private const float WINDOW_HEIGHT = 120f;
 
         private static readonly Vector2 WINDOW_SIZE = new Vector2(WINDOW_WIDTH, WINDOW_HEIGHT);
         private static readonly Rect WINDOW_RECT = new Rect(Vector2.zero, WINDOW_SIZE);
@@ -101,6 +101,8 @@ namespace Borodar.RainbowFolders.Editor
             rect.y += LINE_HEIGHT + SPACING;
             EditorGUI.LabelField(rect, "Recursive");
             rect.y += LINE_HEIGHT + SPACING;
+            EditorGUI.LabelField(rect, "Color");
+            rect.y += LINE_HEIGHT + SPACING;
             EditorGUI.LabelField(rect, "Small Icon");
             rect.y += LINE_HEIGHT + SPACING;
             EditorGUI.LabelField(rect, "Large Icon");
@@ -125,7 +127,10 @@ namespace Borodar.RainbowFolders.Editor
             _currentFolder.IsRecursive = EditorGUI.Toggle(rect, _currentFolder.IsRecursive);
 
             rect.y += LINE_HEIGHT + SPACING + (EditorGUIUtility.isProSkin ? SPACING : 0f);
-            _currentFolder.SmallIcon = (Texture2D) EditorGUI.ObjectField(rect, _currentFolder.SmallIcon, typeof(Texture2D), false);
+            _currentFolder.Color = EditorGUI.ColorField(rect, GUIContent.none, _currentFolder.Color, true, true, false, null);
+
+            rect.y += LINE_HEIGHT + SPACING + (EditorGUIUtility.isProSkin ? SPACING : 0f);
+            _currentFolder.SmallIcon = (Texture2D)EditorGUI.ObjectField(rect, _currentFolder.SmallIcon, typeof(Texture2D), false);
 
             rect.y += LINE_HEIGHT + SPACING;
             _currentFolder.LargeIcon = (Texture2D) EditorGUI.ObjectField(rect, _currentFolder.LargeIcon, typeof(Texture2D), false);
