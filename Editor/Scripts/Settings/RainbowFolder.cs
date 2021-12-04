@@ -13,20 +13,47 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 using UnityEngine;
 
 namespace Borodar.RainbowFolders.Editor.Settings
 {
     [Serializable]
-    public class RainbowFolder
+    public class BasicRainbowFolder
+    {
+        public List<BaseRainbowFolder> IconLayers;
+
+        public BasicRainbowFolder()
+        {
+            IconLayers = new List<BaseRainbowFolder>();
+        }
+
+        public void Load(BasicRainbowFolder basicRainbowFolder)
+        {
+            IconLayers.Clear();
+            foreach (var item in basicRainbowFolder.IconLayers)
+            {
+                IconLayers.Add(item.Copy());
+            }
+        }
+
+        public BasicRainbowFolder Copy()
+        {
+            return new BasicRainbowFolder()
+            {
+                IconLayers = IconLayers.Select(s => s.Copy()).ToList()
+            };
+        }
+    }
+
+    [Serializable]
+    public class RainbowFolder : BasicRainbowFolder// : BaseRainbowFolder
     {
         public KeyType Type;
-        public string Key;
+        public string Name;
         public bool IsRecursive;
-        public Color Color;
-
-        public Texture2D SmallIcon;
-        public Texture2D LargeIcon;
 
         //---------------------------------------------------------------------
         // Ctors
@@ -35,27 +62,29 @@ namespace Borodar.RainbowFolders.Editor.Settings
         public RainbowFolder(RainbowFolder value)
         {
             Type = value.Type;
-            Key = value.Key;
+            Name = value.Name;
             IsRecursive = value.IsRecursive;
-            Color = value.Color;
-            SmallIcon = value.SmallIcon;
-            LargeIcon = value.LargeIcon;
+            IconLayers = new List<BaseRainbowFolder>();
+            foreach (var item in value.IconLayers)
+            {
+                IconLayers.Add(item.Copy());
+            }
         }
 
         public RainbowFolder(KeyType type, string key)
         {
             Type = type;
-            Key = key;
-            Color = Color.white;
+            Name = key;
+            IconLayers = new List<BaseRainbowFolder>();
         }
 
-        public RainbowFolder(KeyType type, string key, FolderIconPair icons)
+        public RainbowFolder(KeyType type, string key, RainbowFolder baseFolder)
         {
             Type = type;
-            Key = key;
-            Color = Color.white;
-            SmallIcon = icons.SmallIcon;
-            LargeIcon = icons.LargeIcon;
+            Name = key;
+            IsRecursive = baseFolder.IsRecursive;
+            IconLayers = new List<BaseRainbowFolder>();
+            Load(baseFolder);
         }
 
         //---------------------------------------------------------------------
@@ -65,16 +94,14 @@ namespace Borodar.RainbowFolders.Editor.Settings
         public void CopyFrom(RainbowFolder target)
         {
             Type = target.Type;
-            Key = target.Key;
+            Name = target.Name;
             IsRecursive = target.IsRecursive;
-            Color = target.Color;
-            SmallIcon = target.SmallIcon;
-            LargeIcon = target.LargeIcon;
+            Load(target);
         }
 
         public bool HasAtLeastOneIcon()
         {
-            return SmallIcon != null || LargeIcon != null;
+            return IconLayers.Any(s => s.Icon != null);// || !string.IsNullOrEmpty(UnityResourceId);
         }
 
         //---------------------------------------------------------------------

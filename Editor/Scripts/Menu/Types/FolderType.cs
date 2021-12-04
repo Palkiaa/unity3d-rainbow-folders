@@ -18,10 +18,8 @@ using UnityEngine;
 namespace Borodar.RainbowFolders.Editor
 {
     [Serializable]
-    public class FolderType
+    public class FolderType : BaseRainbowFolder
     {
         public FolderTypeName Type;
-        public Texture2D SmallIcon;
-        public Texture2D LargeIcon;
     }
 }

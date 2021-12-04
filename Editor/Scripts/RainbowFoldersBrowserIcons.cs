@@ -77,16 +77,18 @@ namespace Borodar.RainbowFolders.Editor
 
             var setting = RainbowFoldersSettings.Instance;
             if (setting == null) return;
-            var folder = RainbowFoldersSettings.Instance.GetFolderByPath(path, true);
-            if (folder == null) return;
 
-            if (isSmall)
+            //var folderByPath = ;
+            //var folder = folderByPath?.Copy();
+            //return;
+            var folder = setting.GetFolderByPath(path, true);
+            if (folder == null && setting.UseDefault)
             {
-                DrawCustomIcon(guid, rect, folder.SmallIcon, isSmall, folder.Color);
+                //DrawCustomFolder(guid, rect, setting.DefaultFolder, isSmall);
             }
-            else
+            else if (folder != null)
             {
-                DrawCustomIcon(guid, rect, folder.LargeIcon, isSmall, folder.Color);
+                DrawCustomFolder(guid, rect, folder, isSmall);
             }
         }
 
@@ -203,24 +205,212 @@ namespace Borodar.RainbowFolders.Editor
             }
         }
 
-        private static void DrawCustomIcon(string guid, Rect rect, Texture texture, bool isSmall, Color? color = null)
+        private static void DrawCustomFolder(string guid, Rect rect, BasicRainbowFolder rainbowFolder, bool isSmall)
         {
-            if (rect.width > LARGE_ICON_SIZE)
+
+            //if (new UnityEditor.UI.NavigationDrawer().)
+            //{
+            //
+            //}
+
+            foreach (var folder in rainbowFolder.IconLayers)
             {
-                // center the icon if it is zoomed
-                var offset = (rect.width - LARGE_ICON_SIZE) / 2f;
-                rect = new Rect(rect.x + offset, rect.y + offset, LARGE_ICON_SIZE, LARGE_ICON_SIZE);
+                var displayRect = rect;
+
+                displayRect.x += rect.width * folder.Rect.x;
+                displayRect.y += rect.height * folder.Rect.y;
+
+                displayRect.width = rect.width * folder.Rect.width;
+                displayRect.height = rect.height * folder.Rect.height;
+
+                var icon = folder.Icon;
+                bool unityIcon = false;
+                if (icon == null && !string.IsNullOrWhiteSpace(folder.UnityResourceId))
+                {
+                    unityIcon = true;
+                    icon = (Texture2D)EditorGUIUtility.IconContent(folder.UnityResourceId)?.image;
+                }
+
+                if (icon == null)
+                {
+                    return;
+                }
+
+                if (folder.Background)
+                {
+                    EditorGUI.DrawRect(displayRect, folder.BackgroundColor);
+                }
+
+                if (folder.AutoCrop || folder.CropRect.position != Vector2.zero || folder.CropRect.size != Vector2.one)
+                {
+                    if (unityIcon || !icon.isReadable)
+                    {
+                        Texture2D copy;
+                        if (!ReadableCopy.TryGetValue(icon, out copy))
+                        {
+                            copy = new Texture2D(icon.width, icon.height, icon.format, icon.mipmapCount, false);
+                            copy.LoadRawTextureData(icon.GetRawTextureData());
+                            ReadableCopy[icon] = copy;
+                        }
+                        if (copy != null)
+                        {
+                            icon = copy;
+                        }
+                        
+                    }
+
+                    Color[] colors;
+                    int width;
+                    int height;
+                    if (folder.AutoCrop)
+                    {
+                        var cropArea = CroppedArea(icon);
+                        width = cropArea.Right - cropArea.Left;
+                        height = cropArea.Bottom - cropArea.Top;
+
+                        colors = icon.GetPixels(cropArea.Left, cropArea.Top, width, height);
+                    }
+                    else
+                    {
+                        int x = (int)(icon.width * folder.CropRect.x);
+                        int y = (int)(icon.height * folder.CropRect.y);
+                        width = (int)(icon.width * folder.CropRect.width);
+                        height = (int)(icon.height * folder.CropRect.height);
+
+                        colors = icon.GetPixels(x, y, width, height);
+                    }
+
+                    
+                    icon = new Texture2D(width, height);
+                    icon.SetPixels(colors);
+                    icon.Apply();
+                }
+                
+                if (folder.Tint)
+                {
+                    DrawCustomIcon(guid, displayRect, icon, isSmall, folder.Color, folder.ScaleMode);
+                }
+                else
+                {
+                    DrawCustomIcon(guid, displayRect, icon, isSmall, scaleMode: folder.ScaleMode);
+                }
             }
-            else
+        }
+
+        public class RectInt
+        {
+            public int Top;
+            public int Bottom;
+            public int Left;
+            public int Right;
+        }
+
+        public class Texture2DComparer : IEqualityComparer<Texture2D>
+        {
+            public bool Equals(Texture2D x, Texture2D y)
             {
-                // unity shifted small icons a bit in 5.5
-#if UNITY_5_5
-                    if (isSmall) rect = new Rect(rect.x + 3, rect.y, rect.width, rect.height);
-#elif UNITY_5_6_OR_NEWER
-                if (isSmall && !IsTreeView(rect))
-                    rect = new Rect(rect.x + 3, rect.y, rect.width, rect.height);
-#endif
+                return x.imageContentsHash == y.imageContentsHash;
             }
+
+            public int GetHashCode(Texture2D obj)
+            {
+                return obj.imageContentsHash.GetHashCode();
+            }
+        }
+
+        private static Dictionary<Texture2D, Texture2D> ReadableCopy = new Dictionary<Texture2D, Texture2D>(new Texture2DComparer());
+        private static Dictionary<Texture2D, RectInt> CroppedRects = new Dictionary<Texture2D, RectInt>(new Texture2DComparer());
+        private static RectInt CroppedArea(Texture2D texture2D)
+        {
+            var result = new RectInt()
+            {
+                Top = 0,
+                Bottom = texture2D.height,
+                Left = 0,
+                Right = texture2D.width
+            };
+
+            if (CroppedRects.TryGetValue(texture2D, out var cropped))
+            {
+                return cropped;
+            }
+
+            bool foundColor = false;
+            for (int Xi = 0; Xi < texture2D.width; Xi++)
+            {
+                for (int Yi = 0; Yi < texture2D.height; Yi++)
+                    if (IsClearPixel(texture2D, Xi, Yi, out foundColor))
+                        break;
+
+                if (foundColor)
+                {
+                    result.Left = Xi;
+                    break;
+                }
+            }
+
+            foundColor = false;
+            for (int Xi = texture2D.width - 1; Xi >= 0; Xi--)
+            {
+                for (int Yi = 0; Yi < texture2D.height; Yi++)
+                    if (IsClearPixel(texture2D, Xi, Yi, out foundColor))
+                        break;
+
+                if (foundColor)
+                {
+                    result.Right = Xi;
+                    break;
+                }
+            }
+
+            foundColor = false;
+            for (int Yi = 0; Yi < texture2D.height; Yi++)
+            {
+                for (int Xi = 0; Xi < texture2D.width; Xi++)
+                    if (IsClearPixel(texture2D, Xi, Yi, out foundColor))
+                        break;
+
+                if (foundColor)
+                {
+                    result.Top = Yi;
+                    break;
+                }
+            }
+
+            foundColor = false;
+            for (int Yi = texture2D.height - 1; Yi >= 0; Yi--)
+            {
+                for (int Xi = 0; Xi < texture2D.width; Xi++)
+                    if (IsClearPixel(texture2D, Xi, Yi, out foundColor))
+                        break;
+
+                if (foundColor)
+                {
+                    result.Bottom = Yi;
+                    break;
+                }
+            }
+
+            CroppedRects[texture2D] = result;
+            return result;
+        }
+
+        private static bool IsClearPixel(Texture2D texture2D, int x, int y, out bool clear)
+        {
+            var color = texture2D.GetPixel(x, y);
+            clear = color != Color.clear;
+            return clear;
+        }
+
+        private static void DrawCustomIcon(string guid, Rect rect, Texture texture, bool isSmall, Color? color = null, ScaleMode scaleMode = ScaleMode.StretchToFill)
+        {
+            if (isSmall)
+            {
+                Vector2 scale = Vector2.one * 1.5f;
+                rect.position -= scale;
+                rect.size += scale * 2;
+            }
+
 
             if (_isCollabEnabled())
             {
@@ -248,11 +438,11 @@ namespace Borodar.RainbowFolders.Editor
             {
                 if (color != null)
                 {
-                    GUI.DrawTexture(rect, texture, ScaleMode.ScaleToFit, true, 0, color.Value, 0f, 0f);
+                    GUI.DrawTexture(rect, texture, scaleMode, true, 0, color.Value, 0f, 0f);
                 }
                 else
                 {
-                    GUI.DrawTexture(rect, texture);
+                    GUI.DrawTexture(rect, texture, scaleMode);
                 }
             }
         }

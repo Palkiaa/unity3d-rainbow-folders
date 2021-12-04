@@ -149,29 +149,25 @@ namespace Borodar.RainbowFolders.Editor
         private static void Colorize(FolderColorName color, RainbowFolder folder)
         {
             var icons = FolderColorsStorage.Instance.GetIconsByColor(color);
-            folder.SmallIcon = icons.SmallIcon;
-            folder.LargeIcon = icons.LargeIcon;
+            //folder.LoadFolder(icons);
         }
 
         private static void AssignTag(FolderTagName tag, RainbowFolder folder)
         {
             var icons = FolderTagsStorage.Instance.GetIconsByTag(tag);
-            folder.SmallIcon = icons.SmallIcon;
-            folder.LargeIcon = icons.LargeIcon;
+            //folder.LoadFolder(icons);
         }
 
         private static void AssingType(FolderTypeName type, RainbowFolder folder)
         {
             var icons = FolderTypesStorage.Instance.GetIconsByType(type);
-            folder.SmallIcon = icons.SmallIcon;
-            folder.LargeIcon = icons.LargeIcon;
+            //folder.LoadFolder(icons);
         }
 
         private static void AssingPlatform(FolderPlatformName platform, RainbowFolder folder)
         {
             var icons = FolderPlatformsStorage.Instance.GetIconsByType(platform);
-            folder.SmallIcon = icons.SmallIcon;
-            folder.LargeIcon = icons.LargeIcon;
+            //folder.LoadFolder(icons);
         }
 
         //---------------------------------------------------------------------

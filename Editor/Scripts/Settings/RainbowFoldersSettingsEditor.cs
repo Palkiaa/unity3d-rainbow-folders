@@ -22,12 +22,15 @@ namespace Borodar.RainbowFolders.Editor.Settings
     [CustomEditor(typeof (RainbowFoldersSettings))]
     public class RainbowFoldersSettingsEditor : UnityEditor.Editor
     {
-        private const string PROP_NAME_FOLDERS = "Folders";
+        private string PROP_NAME_DEFAULTFOLDER => nameof(RainbowFoldersSettings.DefaultFolder);
+        private string PROP_NAME_FOLDERS => nameof(RainbowFoldersSettings.Folders);
 
+        private SerializedProperty _defaultFolderProperty;
         private SerializedProperty _foldersProperty;
 
         protected void OnEnable()
         {
+            _defaultFolderProperty = serializedObject.FindProperty(PROP_NAME_DEFAULTFOLDER);
             _foldersProperty = serializedObject.FindProperty(PROP_NAME_FOLDERS);
         }
 
@@ -37,13 +40,25 @@ namespace Borodar.RainbowFolders.Editor.Settings
             RainbowFoldersSettings settings = target as RainbowFoldersSettings;
             if (GUILayout.Button("Reset all color modifiers"))
             {
-                foreach (var item in settings.Folders)
+                foreach (var layer in settings.DefaultFolder.IconLayers)
                 {
-                    item.Color = Color.white;
+                    layer.Color = Color.white;
+                }
+
+                foreach (var folder in settings.Folders)
+                {
+                    foreach (var layer in folder.IconLayers)
+                    {
+                        layer.Color = Color.white;
+                    }
                 }
             }
-            ReorderableListGUI.Title("Rainbow Folders");
-            ReorderableListGUI.ListField(_foldersProperty);
+            base.OnInspectorGUI();
+            //GUILayout.Label("Default folder settings");
+            //EditorGUILayout.PropertyField(_defaultFolderProperty);
+
+            //ReorderableListGUI.Title("Rainbow Folders");
+            //ReorderableListGUI.ListField(_foldersProperty);
             serializedObject.ApplyModifiedProperties();
         }
 

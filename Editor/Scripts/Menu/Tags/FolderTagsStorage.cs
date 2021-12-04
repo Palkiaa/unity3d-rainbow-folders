@@ -48,10 +48,10 @@ namespace Borodar.RainbowFolders.Editor
         // Public
         //---------------------------------------------------------------------
 
-        public FolderIconPair GetIconsByTag(FolderTagName tag)
+        public BaseRainbowFolder GetIconsByTag(FolderTagName tag)
         {
             var taggedFolder = ColorFolderTags.Single(x => x.Tag == tag);
-            return new FolderIconPair { SmallIcon = taggedFolder.SmallIcon, LargeIcon = taggedFolder.LargeIcon };
+            return taggedFolder.Copy();
         }
     }
 }

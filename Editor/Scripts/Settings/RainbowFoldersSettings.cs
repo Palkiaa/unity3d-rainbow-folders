@@ -25,12 +25,21 @@ using KeyType = Borodar.RainbowFolders.Editor.Settings.RainbowFolder.KeyType;
 namespace Borodar.RainbowFolders.Editor.Settings
 {
     [HelpURL(AssetInfo.HELP_URL)]
+    [CreateAssetMenu(fileName = "RainbowFoldersSettings", menuName = "RainbowFolders/Settings")]
     public class RainbowFoldersSettings : ScriptableObject
     {
         private const string RELATIVE_PATH = "Editor/Setting/RainbowFoldersSettings.asset";
         private const string DEVEL_PATH = "Assets/Devel/Editor/Data/RainbowFoldersSettings.asset";
 
+        public bool UseDefault;
+        public BasicRainbowFolder DefaultFolder;
         public List<RainbowFolder> Folders;
+
+        public RainbowFoldersSettings()
+        {
+            DefaultFolder = new BasicRainbowFolder();
+            Folders = new List<RainbowFolder>();
+        }
 
         //---------------------------------------------------------------------
         // Instance
@@ -65,7 +74,7 @@ namespace Borodar.RainbowFolders.Editor.Settings
         public RainbowFolder GetFolder(RainbowFolder match)
         {
             if (IsNullOrEmpty(Folders) || match == null) return null;
-            return Folders.Find(x => x.Type == match.Type && x.Key == match.Key);
+            return Folders.Find(x => x.Type == match.Type && x.Name == match.Name);
         }
 
         /// <summary>
@@ -85,21 +94,21 @@ namespace Borodar.RainbowFolders.Editor.Settings
                         var folderName = Path.GetFileName(folderPath);
                         if (allowRecursive && folder.IsRecursive)
                         {
-                            if (folderPath.Contains(string.Format("/{0}", folder.Key))) return folder;
+                            if (folderPath.Contains(string.Format("/{0}", folder.Name))) return folder;
                         }
                         else
                         {
-                            if (folder.Key.Equals(folderName)) return folder;
+                            if (folder.Name.Equals(folderName)) return folder;
                         }
                         break;
                     case KeyType.Path:
                         if (allowRecursive && folder.IsRecursive)
                         {
-                            if (folderPath.StartsWith(folder.Key)) return folder;
+                            if (folderPath.StartsWith(folder.Name)) return folder;
                         }
                         else
                         {
-                            if (folder.Key.Equals(folderPath)) return folder;
+                            if (folder.Name.Equals(folderPath)) return folder;
                         }
                         break;
                     default:
@@ -147,7 +156,7 @@ namespace Borodar.RainbowFolders.Editor.Settings
         {
             if (match == null) return;
             Undo.RecordObject(this, "Modify Rainbow Folder Settings");
-            Folders.RemoveAll(x => x.Type == match.Type && x.Key == match.Key);
+            Folders.RemoveAll(x => x.Type == match.Type && x.Name == match.Name);
             EditorUtility.SetDirty(this);
         }
 
@@ -157,35 +166,26 @@ namespace Borodar.RainbowFolders.Editor.Settings
             RemoveAll(match);
         }
 
-        public Texture2D GetFolderIcon(string folderPath, bool small = true)
-        {
-            var folder = GetFolderByPath(folderPath, true);
-            if (folder == null) return null;
-
-            return small ? folder.SmallIcon : folder.LargeIcon;
-        }
-
         public void ChangeFolderIcons(RainbowFolder value)
         {
             Undo.RecordObject(this, "Modify Rainbow Folder Settings");
 
-            var folder = Folders.SingleOrDefault(x => x.Type == value.Type && x.Key == value.Key);
+            var folder = Folders.SingleOrDefault(x => x.Type == value.Type && x.Name == value.Name);
             if (folder == null)
             {
                 AddFolder(new RainbowFolder(value));
             }
             else
             {
-                folder.SmallIcon = value.SmallIcon;
-                folder.LargeIcon = value.LargeIcon;
+                //folder.LoadFolder(value);
             }
 
             EditorUtility.SetDirty(this);
         }
 
-        public void ChangeFolderIconsByPath(string path, FolderIconPair icons)
+        public void ChangeFolderIconsByPath(string path, BaseRainbowFolder baseFolder)
         {
-            ChangeFolderIcons(new RainbowFolder(KeyType.Path, path, icons));
+            //ChangeFolderIcons(new RainbowFolder(KeyType.Path, path, baseFolder));
         }
 
         //---------------------------------------------------------------------

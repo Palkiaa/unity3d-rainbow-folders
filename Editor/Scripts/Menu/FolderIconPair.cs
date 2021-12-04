@@ -11,6 +11,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+using System;
+
 using UnityEngine;
 
 
@@ -21,7 +23,7 @@ namespace Borodar.RainbowFolders.Editor
     /// </summary>
     public class FolderIconPair
     {
-        public Texture2D SmallIcon;
-        public Texture2D LargeIcon;
+        public Texture2D FolderIcon;
+        public Texture2D Icon;
     }
 }

@@ -257,7 +257,7 @@ namespace Borodar.RainbowFolders.Editor
             ChangeSelectedFoldersIcons(icons);
         }
 
-        private static void ChangeSelectedFoldersIcons(FolderIconPair icons)
+        private static void ChangeSelectedFoldersIcons(BaseRainbowFolder icons)
         {
             Selection.assetGUIDs.ToList().ForEach(
                 assetGuid =>

@@ -80,91 +80,91 @@ namespace Borodar.RainbowFolders.Editor
         {
             base.OnGUI();
             var rect = WINDOW_RECT;
-
-            // Background
-
-            var borderColor = EditorGUIUtility.isProSkin ? new Color(0.13f, 0.13f, 0.13f) : new Color(0.51f, 0.51f, 0.51f);           
-            EditorGUI.DrawRect(WINDOW_RECT, borderColor);
-
-            var backgroundColor = EditorGUIUtility.isProSkin ? new Color(0.18f, 0.18f, 0.18f) : new Color(0.83f, 0.83f, 0.83f);
-            EditorGUI.DrawRect(BACKGROUND_RECT, backgroundColor);
-
-            // Labels
-
-            rect.x += 0.5f * PADDING;
-            rect.y += PADDING;
-            rect.width = LABELS_WIDTH - PADDING;
-            rect.height = LINE_HEIGHT;
-
-            _currentFolder.Type = (KeyType)EditorGUI.EnumPopup(rect, _currentFolder.Type);
-
-            rect.y += LINE_HEIGHT + SPACING;
-            EditorGUI.LabelField(rect, "Recursive");
-            rect.y += LINE_HEIGHT + SPACING;
-            EditorGUI.LabelField(rect, "Color");
-            rect.y += LINE_HEIGHT + SPACING;
-            EditorGUI.LabelField(rect, "Small Icon");
-            rect.y += LINE_HEIGHT + SPACING;
-            EditorGUI.LabelField(rect, "Large Icon");
-
-            // Values
-
-            rect.x += LABELS_WIDTH;
-            rect.y = WINDOW_RECT.y + PADDING;
-            rect.width = WINDOW_RECT.width - LABELS_WIDTH - PADDING;
-
-            GUI.enabled = false;
-            if (_paths.Count == 1)
-                _currentFolder.Key = (_currentFolder.Type == KeyType.Path) ? _paths[0] : Path.GetFileName(_paths[0]);
-            else
-                _currentFolder.Key = "---";
-            EditorGUI.TextField(rect, GUIContent.none, _currentFolder.Key);
-            GUI.enabled = true;
-
-            
-            rect.y += LINE_HEIGHT + SPACING - (EditorGUIUtility.isProSkin ? SPACING : 0f);
-            rect.width -= PREVIEW_SIZE_LARGE + PADDING;
-            _currentFolder.IsRecursive = EditorGUI.Toggle(rect, _currentFolder.IsRecursive);
-
-            rect.y += LINE_HEIGHT + SPACING + (EditorGUIUtility.isProSkin ? SPACING : 0f);
-            _currentFolder.Color = EditorGUI.ColorField(rect, GUIContent.none, _currentFolder.Color, true, true, false, null);
-
-            rect.y += LINE_HEIGHT + SPACING + (EditorGUIUtility.isProSkin ? SPACING : 0f);
-            _currentFolder.SmallIcon = (Texture2D)EditorGUI.ObjectField(rect, _currentFolder.SmallIcon, typeof(Texture2D), false);
-
-            rect.y += LINE_HEIGHT + SPACING;
-            _currentFolder.LargeIcon = (Texture2D) EditorGUI.ObjectField(rect, _currentFolder.LargeIcon, typeof(Texture2D), false);
-
-            // Preview
-
-            rect.x += rect.width + PADDING;
-            rect.y = WINDOW_RECT.y + LINE_HEIGHT + 6f;
-            rect.width = rect.height = PREVIEW_SIZE_LARGE;
-            GUI.DrawTexture(rect, RainbowFoldersEditorUtility.GetDefaultFolderIcon());
-            if (_currentFolder.LargeIcon) GUI.DrawTexture(rect, _currentFolder.LargeIcon);
-
-            rect.y += PREVIEW_SIZE_LARGE - PREVIEW_SIZE_SMALL - 4f;
-            rect.width = rect.height = PREVIEW_SIZE_SMALL;
-            GUI.DrawTexture(rect, RainbowFoldersEditorUtility.GetDefaultFolderIcon());
-            if (_currentFolder.SmallIcon) GUI.DrawTexture(rect, _currentFolder.SmallIcon);
-
+            //
+            //// Background
+            //
+            //var borderColor = EditorGUIUtility.isProSkin ? new Color(0.13f, 0.13f, 0.13f) : new Color(0.51f, 0.51f, 0.51f);           
+            //EditorGUI.DrawRect(WINDOW_RECT, borderColor);
+            //
+            //var backgroundColor = EditorGUIUtility.isProSkin ? new Color(0.18f, 0.18f, 0.18f) : new Color(0.83f, 0.83f, 0.83f);
+            //EditorGUI.DrawRect(BACKGROUND_RECT, backgroundColor);
+            //
+            //// Labels
+            //
+            //rect.x += 0.5f * PADDING;
+            //rect.y += PADDING;
+            //rect.width = LABELS_WIDTH - PADDING;
+            //rect.height = LINE_HEIGHT;
+            //
+            //_currentFolder.Type = (KeyType)EditorGUI.EnumPopup(rect, _currentFolder.Type);
+            //
+            //rect.y += LINE_HEIGHT + SPACING;
+            //EditorGUI.LabelField(rect, "Recursive");
+            //rect.y += LINE_HEIGHT + SPACING;
+            //EditorGUI.LabelField(rect, "Color");
+            //rect.y += LINE_HEIGHT + SPACING;
+            //EditorGUI.LabelField(rect, "Rect");
+            //rect.y += LINE_HEIGHT + SPACING;
+            //EditorGUI.LabelField(rect, "Icon");
+            //
+            //// Values
+            //
+            //rect.x += LABELS_WIDTH;
+            //rect.y = WINDOW_RECT.y + PADDING;
+            //rect.width = WINDOW_RECT.width - LABELS_WIDTH - PADDING;
+            //
+            //GUI.enabled = false;
+            //if (_paths.Count == 1)
+            //    _currentFolder.Key = (_currentFolder.Type == KeyType.Path) ? _paths[0] : Path.GetFileName(_paths[0]);
+            //else
+            //    _currentFolder.Key = "---";
+            //EditorGUI.TextField(rect, GUIContent.none, _currentFolder.Key);
+            //GUI.enabled = true;
+            //
+            //
+            //rect.y += LINE_HEIGHT + SPACING - (EditorGUIUtility.isProSkin ? SPACING : 0f);
+            //rect.width -= PREVIEW_SIZE_LARGE + PADDING;
+            //_currentFolder.IsRecursive = EditorGUI.Toggle(rect, _currentFolder.IsRecursive);
+            //
+            //rect.y += LINE_HEIGHT + SPACING + (EditorGUIUtility.isProSkin ? SPACING : 0f);
+            //_currentFolder.Color = EditorGUI.ColorField(rect, GUIContent.none, _currentFolder.Color, true, true, false, null);
+            //
+            //rect.y += LINE_HEIGHT + SPACING + (EditorGUIUtility.isProSkin ? SPACING : 0f);
+            //_currentFolder.Rect = EditorGUI.RectField(rect, _currentFolder.Rect);
+            //
+            //rect.y += LINE_HEIGHT + SPACING;
+            //_currentFolder.Icon = (Texture2D) EditorGUI.ObjectField(rect, _currentFolder.Icon, typeof(Texture2D), false);
+            //
+            //// Preview
+            //
+            //rect.x += rect.width + PADDING;
+            //rect.y = WINDOW_RECT.y + LINE_HEIGHT + 6f;
+            //rect.width = rect.height = PREVIEW_SIZE_LARGE;
+            //GUI.DrawTexture(rect, RainbowFoldersEditorUtility.GetDefaultFolderIcon());
+            //if (_currentFolder.Icon) GUI.DrawTexture(rect, _currentFolder.Icon);
+            //
+            //rect.y += PREVIEW_SIZE_LARGE - PREVIEW_SIZE_SMALL - 4f;
+            //rect.width = rect.height = PREVIEW_SIZE_SMALL;
+            //GUI.DrawTexture(rect, RainbowFoldersEditorUtility.GetDefaultFolderIcon());
+            //if (_currentFolder.Icon) GUI.DrawTexture(rect, _currentFolder.Icon);
+            //
             // Buttons
-
+            
             rect.x = PADDING;
             rect.y = WINDOW_HEIGHT - LINE_HEIGHT - 0.75f * PADDING;            
             rect.width = BUTTON_WIDTH_SMALL;
             ButtonSettings(rect);
-
+            
             rect.x += BUTTON_WIDTH_SMALL + 0.75f * PADDING;
             ButtonPresets(rect);
-
+            
             rect.x += BUTTON_WIDTH_SMALL + 0.75f * PADDING;
             ButtonDefault(rect);
-
+            
             rect.x = WINDOW_WIDTH - 2f * (BUTTON_WIDTH + PADDING);
             rect.width = BUTTON_WIDTH;
             ButtonCancel(rect);
-
+            
             rect.x = WINDOW_WIDTH - BUTTON_WIDTH - PADDING;
             ButtonApply(rect);
         }
@@ -194,8 +194,7 @@ namespace Borodar.RainbowFolders.Editor
             var icon = RainbowFoldersEditorUtility.GetDeleteButtonIcon();
             if (!GUI.Button(rect, new GUIContent(icon, "Revert to Default"), GUIStyle.none)) return;
             _currentFolder.IsRecursive = false;
-            _currentFolder.SmallIcon = null;
-            _currentFolder.LargeIcon = null;
+            //_currentFolder.Reset();
         }
 
         private void ButtonCancel(Rect rect)
@@ -210,7 +209,7 @@ namespace Borodar.RainbowFolders.Editor
 
             for (var i = 0; i < _existingFolders.Length; i++)
             {
-                _currentFolder.Key = (_currentFolder.Type == KeyType.Path)
+                _currentFolder.Name = (_currentFolder.Type == KeyType.Path)
                     ? _paths[i]
                     : Path.GetFileName(_paths[i]);
 

@@ -19,10 +19,8 @@ using UnityEngine;
 namespace Borodar.RainbowFolders.Editor
 {
     [Serializable]
-    public class FolderColor
+    public class FolderColor : BaseRainbowFolder
     {
-        public FolderColorName Color;
-        public Texture2D SmallIcon;
-        public Texture2D LargeIcon;
+        public FolderColorName ColorName;
     }
 }
