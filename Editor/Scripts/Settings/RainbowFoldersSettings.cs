@@ -28,8 +28,7 @@ namespace Borodar.RainbowFolders.Editor.Settings
     [CreateAssetMenu(fileName = "RainbowFoldersSettings", menuName = "RainbowFolders/Settings")]
     public class RainbowFoldersSettings : ScriptableObject
     {
-        private const string RELATIVE_PATH = "Editor/Setting/RainbowFoldersSettings.asset";
-        private const string DEVEL_PATH = "Assets/Devel/Editor/Data/RainbowFoldersSettings.asset";
+        private static string RELATIVE_PATH => $"{RainbowFoldersPreferences.Path}/RainbowFoldersSettings.asset";
 
         public bool UseDefault;
         public BasicRainbowFolder DefaultFolder;
@@ -53,11 +52,11 @@ namespace Borodar.RainbowFolders.Editor.Settings
             get
             {
                 if (_instance == null)
-                    #if RAINBOW_FOLDERS_DEVEL
+#if RAINBOW_FOLDERS_DEVEL
                         _instance = AssetDatabase.LoadAssetAtPath<RainbowFoldersSettings>(DEVEL_PATH);
-                    #else
-                        _instance = RainbowFoldersEditorUtility.LoadSetting<RainbowFoldersSettings>(RELATIVE_PATH);
-                    #endif
+#else
+                    _instance = RainbowFoldersEditorUtility.LoadSetting<RainbowFoldersSettings>(RELATIVE_PATH);
+#endif
 
                 return _instance;
             }
