@@ -14,134 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UseDefault: 0
   DefaultFolder:
-    IconLayers:
-    - Tint: 1
-      Color: {r: 0.20000002, g: 0.20000002, b: 0.20000002, a: 0}
-      Background: 0
-      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-      Rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1
-        height: 1
-      UnityResourceId: 
-      Icon: {fileID: 2800000, guid: 4d47a96b3e2e52c46a82d9bcc2f3af5c, type: 3}
-      ScaleMode: 0
-      AutoCrop: 0
-      CropRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
-    - Tint: 1
-      Color: {r: 1, g: 0, b: 0, a: 1}
-      Background: 0
-      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-      Rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1
-        height: 1
-      UnityResourceId: Folder Icon
-      Icon: {fileID: 0}
-      ScaleMode: 0
-      AutoCrop: 0
-      CropRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 0
-        height: 0
+    IconLayers: []
   Folders:
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
-      Background: 0
-      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-      Rect:
-        serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
-      UnityResourceId: cs Script Icon
-      Icon: {fileID: 0}
-      ScaleMode: 2
-      AutoCrop: 0
-      CropRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1
-        height: 1
-    Type: 0
-    Name: Code
-    IsRecursive: 1
-  - IconLayers:
-    - Tint: 1
-      Color: {r: 1, g: 1, b: 0, a: 1}
-      Background: 0
-      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-      Rect:
-        serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
-      UnityResourceId: AudioSource Gizmo
-      Icon: {fileID: 0}
-      ScaleMode: 0
-      AutoCrop: 0
-      CropRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1
-        height: 1
-    Type: 0
-    Name: Audio
-    IsRecursive: 1
-  - IconLayers:
-    - Tint: 0
-      Color: {r: 1, g: 1, b: 1, a: 1}
-      Background: 1
-      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-      Rect:
-        serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
-      UnityResourceId: Texture Icon
-      Icon: {fileID: 0}
-      ScaleMode: 0
-      AutoCrop: 1
-      CropRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1
-        height: 1
-    Type: 0
-    Name: Textures
-    IsRecursive: 1
-  - IconLayers:
-    - Tint: 0
       Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: EditorSettings Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -159,13 +47,37 @@ MonoBehaviour:
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
+      UnityResourceId: AudioSource Icon
+      Icon: {fileID: 0}
+      ScaleMode: 0
+      AutoCrop: 0
+      CropRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1
+        height: 1
+    Type: 0
+    Name: Audio
+    IsRecursive: 1
+  - IconLayers:
+    - Tint: 0
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      Background: 0
+      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+      Rect:
+        serializedVersion: 2
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: PointEffector2D Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -178,18 +90,18 @@ MonoBehaviour:
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: Prefab Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -202,18 +114,18 @@ MonoBehaviour:
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: UnityLogoLarge
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -226,42 +138,18 @@ MonoBehaviour:
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
-      UnityResourceId: ScriptableObject Icon
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
+      UnityResourceId: P4_AddedLocal
       Icon: {fileID: 0}
-      ScaleMode: 2
-      AutoCrop: 0
-      CropRect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1
-        height: 1
-    Type: 0
-    Name: ScriptableObjects
-    IsRecursive: 1
-  - IconLayers:
-    - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
-      Background: 0
-      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
-      Rect:
-        serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
-      UnityResourceId: CollabCreate Icon
-      Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -274,18 +162,18 @@ MonoBehaviour:
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: Preset Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -294,22 +182,22 @@ MonoBehaviour:
         width: 1
         height: 1
     Type: 0
-    Name: Setting
+    Name: Settings
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: Terrain Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -322,18 +210,42 @@ MonoBehaviour:
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
+      UnityResourceId: Texture Icon
+      Icon: {fileID: 0}
+      ScaleMode: 0
+      AutoCrop: 0
+      CropRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1
+        height: 1
+    Type: 0
+    Name: Textures;Icons;Art
+    IsRecursive: 1
+  - IconLayers:
+    - Tint: 0
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      Background: 0
+      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+      Rect:
+        serializedVersion: 2
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: ParticleSystem Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -346,18 +258,18 @@ MonoBehaviour:
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: Material Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -370,18 +282,18 @@ MonoBehaviour:
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: AnimatorController Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -394,18 +306,18 @@ MonoBehaviour:
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: AnimationClip Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -418,18 +330,18 @@ MonoBehaviour:
     IsRecursive: 1
   - IconLayers:
     - Tint: 0
-      Color: {r: 0, g: 0, b: 1, a: 1}
+      Color: {r: 1, g: 1, b: 1, a: 1}
       Background: 0
       BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
       Rect:
         serializedVersion: 2
-        x: 0.6
-        y: 0.6
-        width: 0.4
-        height: 0.4
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
       UnityResourceId: Mesh Icon
       Icon: {fileID: 0}
-      ScaleMode: 2
+      ScaleMode: 0
       AutoCrop: 0
       CropRect:
         serializedVersion: 2
@@ -439,4 +351,52 @@ MonoBehaviour:
         height: 1
     Type: 0
     Name: Models
+    IsRecursive: 1
+  - IconLayers:
+    - Tint: 0
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      Background: 0
+      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+      Rect:
+        serializedVersion: 2
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
+      UnityResourceId: cs Script Icon
+      Icon: {fileID: 0}
+      ScaleMode: 0
+      AutoCrop: 0
+      CropRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1
+        height: 1
+    Type: 0
+    Name: Code;Scripts
+    IsRecursive: 1
+  - IconLayers:
+    - Tint: 0
+      Color: {r: 1, g: 1, b: 1, a: 1}
+      Background: 0
+      BackgroundColor: {r: 1, g: 1, b: 1, a: 1}
+      Rect:
+        serializedVersion: 2
+        x: 0.7
+        y: 0.7
+        width: 0.3
+        height: 0.3
+      UnityResourceId: ScriptableObject Icon
+      Icon: {fileID: 0}
+      ScaleMode: 0
+      AutoCrop: 0
+      CropRect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 1
+        height: 1
+    Type: 0
+    Name: ScriptableObjects;Data
     IsRecursive: 1

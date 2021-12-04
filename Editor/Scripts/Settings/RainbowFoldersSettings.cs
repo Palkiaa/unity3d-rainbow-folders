@@ -82,6 +82,8 @@ namespace Borodar.RainbowFolders.Editor.Settings
         /// </summary>  
         public RainbowFolder GetFolderByPath(string folderPath, bool allowRecursive = false)
         {
+
+
             if (IsNullOrEmpty(Folders)) return null;
 
             for (var index = Folders.Count - 1; index >= 0; index--)
@@ -93,21 +95,21 @@ namespace Borodar.RainbowFolders.Editor.Settings
                         var folderName = Path.GetFileName(folderPath);
                         if (allowRecursive && folder.IsRecursive)
                         {
-                            if (folderPath.Contains(string.Format("/{0}", folder.Name))) return folder;
+                            if (folder.Keys.Any(key => folderPath.Contains(string.Format("/{0}", key)))) return folder;
                         }
                         else
                         {
-                            if (folder.Name.Equals(folderName)) return folder;
+                            if (folder.Keys.Any(key => key.Equals(folderName))) return folder;
                         }
                         break;
                     case KeyType.Path:
                         if (allowRecursive && folder.IsRecursive)
                         {
-                            if (folderPath.StartsWith(folder.Name)) return folder;
+                            if (folder.Keys.Any(key => folderPath.StartsWith(key))) return folder;
                         }
                         else
                         {
-                            if (folder.Name.Equals(folderPath)) return folder;
+                            if (folder.Keys.Any(key => key.Equals(folderPath))) return folder;
                         }
                         break;
                     default:

@@ -53,6 +53,7 @@ namespace Borodar.RainbowFolders.Editor.Settings
     {
         public KeyType Type;
         public string Name;
+        public string[] Keys => Name.Split(';');
         public bool IsRecursive;
 
         //---------------------------------------------------------------------

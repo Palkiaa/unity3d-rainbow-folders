@@ -68,8 +68,16 @@ namespace Borodar.RainbowFolders.Editor
         // Delegates
         //---------------------------------------------------------------------
 
+        private static bool Enabled()
+        {
+            return RainbowFoldersPreferences.Enabled;
+        }
+
         private static void ReplaceFolderIcon(string guid, Rect rect)
         {
+            if (!Enabled())
+                return;
+
             var path = AssetDatabase.GUIDToAssetPath(guid);
             if (!AssetDatabase.IsValidFolder(path)) return;
 
@@ -94,6 +102,9 @@ namespace Borodar.RainbowFolders.Editor
 
         private static void DrawEditIcon(string guid, Rect rect)
         {
+            if (!Enabled())
+                return;
+
             if ((Event.current.modifiers & RainbowFoldersPreferences.ModifierKey) == EventModifiers.None)
             {
                 _multiSelection = false;
@@ -123,6 +134,9 @@ namespace Borodar.RainbowFolders.Editor
 
         private static void ShowWelcomeWindow(string guid, Rect rect)
         {
+            if (!Enabled())
+                return;
+
             if (EditorPrefs.GetBool(RainbowFoldersWelcome.PREF_KEY))
             {
                 // ReSharper disable once DelegateSubtraction
