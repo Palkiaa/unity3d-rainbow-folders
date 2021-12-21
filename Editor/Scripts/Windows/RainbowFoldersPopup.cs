@@ -57,6 +57,10 @@ namespace Borodar.RainbowFolders.Editor
         {
             _paths = paths;
             _settings = RainbowFoldersSettings.Instance;
+            if (_settings == null)
+            {
+                return;
+            }
 
             var size = paths.Count;
             _existingFolders = new RainbowFolder[size];

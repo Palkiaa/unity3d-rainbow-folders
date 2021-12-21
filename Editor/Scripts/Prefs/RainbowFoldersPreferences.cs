@@ -13,10 +13,12 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 using UnityEditor;
 
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Borodar.RainbowFolders.Editor
 {
@@ -27,7 +29,7 @@ namespace Borodar.RainbowFolders.Editor
         private const string HOME_ENABLED_HINT = "Toggle to enable and disable \"Rainbow Folders\".";
 
         private const string HOME_FOLDER_PREF_KEY = "Borodar.RainbowFolders.Path.";
-        private const string HOME_FOLDER_DEFAULT = "Editor/Setting";
+        private const string HOME_FOLDER_DEFAULT = "Addons/RainbowFolders";
         private const string HOME_FOLDER_HINT = "Where \"Rainbow Folders\" saves your settings.";
 
         private const string MOD_KEY_PREF_KEY = "Borodar.RainbowFolders.EditMod.";
@@ -65,21 +67,30 @@ namespace Borodar.RainbowFolders.Editor
         // Messages
         //---------------------------------------------------------------------
 
-        [PreferenceItem("Rainbow Folders")]
-        public static void EditorPreferences()
+
+        [SettingsProvider]
+        public static SettingsProvider EditorPreferences()
         {
-            EditorGUILayout.Separator();
-            ENABLE_KEY_PREF.Draw();
-            Enabled = ENABLE_KEY_PREF.Value;
+            var provider = new SettingsProvider("Preferences/RainbowFolders", SettingsScope.User)
+            {
+                guiHandler = (search) =>
+                {
+                    EditorGUILayout.Separator();
+                    ENABLE_KEY_PREF.Draw();
+                    Enabled = ENABLE_KEY_PREF.Value;
 
-            PATH_KEY_PREF.Draw();
-            Path = PATH_KEY_PREF.Value;
+                    PATH_KEY_PREF.Draw();
+                    Path = PATH_KEY_PREF.Value;
 
-            MODIFIER_KEY_PREF.Draw();
-            ModifierKey = MODIFIER_KEY_PREF.Value;
+                    MODIFIER_KEY_PREF.Draw();
+                    ModifierKey = MODIFIER_KEY_PREF.Value;
 
-            GUILayout.FlexibleSpace();
-            EditorGUILayout.LabelField("Version " + AssetInfo.VERSION, EditorStyles.centeredGreyMiniLabel);
+                    GUILayout.FlexibleSpace();
+                    EditorGUILayout.LabelField("Version " + AssetInfo.VERSION, EditorStyles.centeredGreyMiniLabel);
+                }
+            };
+
+            return provider;
         }
 
         //---------------------------------------------------------------------
@@ -127,7 +138,7 @@ namespace Borodar.RainbowFolders.Editor
             }
         }
 
-        private class EditorPrefsString : EditorPrefsItem<string>
+        public class EditorPrefsString : EditorPrefsItem<string>
         {
             public EditorPrefsString(string key, GUIContent label, string defaultValue)
                 : base(key, label, defaultValue) { }
@@ -145,7 +156,7 @@ namespace Borodar.RainbowFolders.Editor
             }
         }
 
-        private class EditorPrefsModifierKey : EditorPrefsItem<EventModifiers>
+        public class EditorPrefsModifierKey : EditorPrefsItem<EventModifiers>
         {
 
             public EditorPrefsModifierKey(string key, GUIContent label, EventModifiers defaultValue)
@@ -170,7 +181,7 @@ namespace Borodar.RainbowFolders.Editor
             }
         }
 
-        private class EditorPrefsBool : EditorPrefsItem<bool>
+        public class EditorPrefsBool : EditorPrefsItem<bool>
         {
             public EditorPrefsBool(string key, GUIContent label, bool defaultValue)
                 : base(key, label, defaultValue) { }

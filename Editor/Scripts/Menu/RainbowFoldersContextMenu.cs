@@ -110,7 +110,10 @@ namespace Borodar.RainbowFolders.Editor
         [MenuItem(ITEM_SETTINGS, false, 2000)]
         public static void OpenSettings()
         {
-            Selection.activeObject = RainbowFoldersSettings.Instance;
+            if (RainbowFoldersSettings.Instance != null)
+            {
+                Selection.activeObject = RainbowFoldersSettings.Instance;
+            }
         }
 
         [MenuItem(ITEM_CUSTOM, true)]
@@ -267,7 +270,7 @@ namespace Borodar.RainbowFolders.Editor
 
                     var folder = AssetDatabase.LoadAssetAtPath<DefaultAsset>(assetPath);
                     var path = AssetDatabase.GetAssetPath(folder);
-                    RainbowFoldersSettings.Instance.ChangeFolderIconsByPath(path, icons);
+                    RainbowFoldersSettings.Instance?.ChangeFolderIconsByPath(path, icons);
                 }
             );
         }
@@ -280,7 +283,7 @@ namespace Borodar.RainbowFolders.Editor
                     var assetPath = AssetDatabase.GUIDToAssetPath(assetGuid);
                     if (AssetDatabase.IsValidFolder(assetPath))
                     {
-                        RainbowFoldersSettings.Instance.RemoveAllByPath(assetPath);
+                        RainbowFoldersSettings.Instance?.RemoveAllByPath(assetPath);
                     }
                 }
             );
