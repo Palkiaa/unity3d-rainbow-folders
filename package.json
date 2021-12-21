@@ -1,6 +1,6 @@
 {
   "name": "com.teamon.rainbowfolders",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "displayName": "Rainbow Folders",
   "description": "This asset allows you to set custom icons for any folder in unity project browser",
   "unity": "2018.1",
